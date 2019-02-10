@@ -38,4 +38,27 @@ int score_array(int *arr){
 	
 }
 
+//자기 자신을 호출하는 함수를 이용해서 1 부터 특정한 수까지의 곱을 구하는 프로그램을 만들어보세요. (난이도 : 下)
+
+#include <stdio.h>
+
+int factorial(int num);
+
+int main(){
+  int insert;
+  printf("숫자를 입력하시오.\n");
+  scanf("%d", &insert);
+  printf("%d", factorial(insert));
+  
+	return 0;
+}
+
+int factorial(int num){
+  if(num == 1)
+    return 1;
+  return num * factorial(num - 1);
+}
+
+
+
 //출처: https://modoocode.com/28
