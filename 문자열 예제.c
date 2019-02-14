@@ -63,3 +63,33 @@ char compare(char *str1, char *str2) {
 	return 0;
 
 }
+
+// 길이가 최대 100 인 문자열을 하나 입력 받아서 문자열을 역순으로 출력하는 함수를 만들어보세요.
+
+char reverse(char *str);
+
+int main(){
+	char str1[101] = "ReverseMe";
+	reverse(str1);
+	 
+	return 0;
+}
+
+char reverse(char *str){
+	int i = 0;
+	
+	while(*str != '\0'){
+		i++;
+		str++;
+	}
+
+	str--;
+	
+	while(i){
+		printf("%c", *(str));
+		str--;
+		i--;
+	}
+	
+	return 0;
+}
