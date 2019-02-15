@@ -1,3 +1,5 @@
+//문제 출처: https://modoocode.com/33
+
 // 문자열 합치는 함수
 
 #include <stdio.h>
@@ -163,3 +165,55 @@ char compare(char *str1, char *str2){
 
 	return 1;
 }
+
+//문자열을 두 개 입력 받아서 먼저 입력받은 문자열에서 나중에 입력받은 문자열의 위치를 검색하는 함수를 만들어보세요.
+//만일 없다면 -1 을 리턴하고 있다면 그 위치를 리턴합니다. (난이도 : 中)
+
+#include <stdio.h>
+
+char find(char *dest, char *src);
+
+int main(){
+	char str1[100];
+	char str2[100];
+
+	printf("문자열을 입력하시오. 띄어쓰기는 '_'로 입력하시오.\n");
+	scanf("%s", str1);
+	printf("입력한 문자열에서 위치를 찾아낼 단어를 입력하시오.\n");
+	scanf("%s", str2);
+
+	printf("%d", find(str1, str2));
+
+	return 0;
+}
+
+char find(char *dest, char *src){
+	int count = 1;
+	int count_save = 0;
+
+	while(*dest){
+		if(*dest != *src){
+			dest++;
+			count++;
+		}
+		else{
+			while(*dest == *src){
+				dest++;
+				src++;
+				count_save++;
+			}
+			if(*src == '\0'){
+				return count;
+			}
+			else{
+				*src = src[0];
+				count += count_save;
+				count_save = 0;
+			}
+		}		
+	}
+	if(*dest == '\0'){
+		return -1;
+	}
+}
+	
