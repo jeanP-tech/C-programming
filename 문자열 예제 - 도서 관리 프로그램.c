@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+// 함수 인자를 포인터로 받는 이유는 배열을 가리키기 때문
+// (*title)[30]처럼 쓰는 이유는 2차원 배열 포인터를 지정할 때 열의 개수를 써줘야 하기 때문이다  
+
 int add_books(char (*title)[30], char (*author)[30], char (*pub)[30], int *borrowed, int *book_number);
 int search_books(char(*title)[30], char(*author)[30], char(*pub)[30], int *borrowed, int book_number);
 char compare(char *str1, char *str2);
