@@ -1,13 +1,7 @@
 // books.c
 #include <stdio.h>
 #include "header.h"
-
-struct books {
-	char title[30];
-	char author[30];
-	char pub[30];
-	int borrowed;
-};
+#include "books.h"
 
 int main() {
 	struct books book_list[100];
@@ -45,13 +39,7 @@ int main() {
 
 #include <stdio.h>
 #include "header.h"
-
-struct books {
-	char title[30];
-	char author[30];
-	char pub[30];
-	int borrowed;
-};
+#include "books.h"
 
 // 도서 등록 함수
 void add_books(struct books *list, int *num) {
@@ -158,10 +146,18 @@ void return_books(struct books *list) {
 	}
 }
 
-// header.h
+// header.h <함수의 원형을 담아두는 헤더>
 
 void add_books(struct books *list, int *num);
 int search_books(struct books *list, int num);
 char compare(char *str1, char *str2);
 void borrow_books(struct books *list);
 void return_books(struct books *list);
+
+// books.h <구조체를 담아두는 헤더>
+struct books {
+	char title[30];
+	char author[30];
+	char pub[30];
+	int borrowed;
+};
