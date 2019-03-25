@@ -1,0 +1,94 @@
+Macro function
+------------------
+```
+/* 매크로 함수 */
+#include <stdio.h>
+#define square(x) x*x
+
+int main(int argc, char **argv) {
+  printf("square(3) : %d \n", square(3));
+  
+  return 0;
+}
+```
+- 매크로 함수 정의 방법
+  - #define 함수 이름(인자) 치환할 것
+  
+> #define square(x) x* x
+- square라는 이름의 매크로 함수. x를 x*x로 치환하라. 
+  
+> printf("square(3) : %d \n", square(3));
+> printf("square(3) : %d \n", 3 * 3);
+- 두 문장은 동일.
+
+- 진짜 함수와의 차이점
+  - 매크로 함수는 컴파일 되기 전에 -함수를 호출하는 과정 없이- 3*3으로 계산해버림. 
+--------------------
+```
+/* 변수의 이름 출력하기 */
+#include <stdio.h>
+#define PrintVariableName(var) printf(#var "\n");
+
+int main(int argc, char **argv) {
+  int a;
+
+  PrintVariableName(a);
+
+  return 0;
+}
+```
+> #define PrintVariableName(var) printf(#var "\n");
+- #을 붙이면 그 인자를 문자열로 바꿈
+
+----------------------------
+```
+/* ## 의 사용 */
+#include <stdio.h>
+#define AddName(x, y) x##y
+
+int main(int argc, char **argv) {
+  int AddName(a, b);
+
+  ab = 3;
+
+  printf("%d \n", ab);
+
+  return 0;
+}
+```
+- ##은 인자를 하나로 함쳐줌
+
+- 매크로 함수는 괄호를 제대로 쓰지 않으면 오류가 나는 경우가 많음
+- 이를 해결하기 위해 나온 것이 인라인 함수
+  
+인라인 함수
+-------------------------------
+```
+/* 인라인 함수 */
+
+#include <stdio.h>
+__inline int square(int a) { return a * a; }
+int main(int argc, char **argv) {
+  printf("%d", square(3));
+
+  return 0;
+}
+```
+- 함수와 비슷해보이지만 함수를 호출하는 과정과는 큰 차이가 있다
+- 매크로 함수처럼 printf("%d", square(3)); 부분을 printf("%d", 3 * 3); 으로 바꿔버림. 
+- 매크로 함수처럼 단순 치환을 하는 것이 아니라 진짜 함수처럼 동작, 디버깅도 훨씬 수월
+--------------------------
+```
+/* 다른 인라인 함수 예제*/
+#include <stdio.h>
+__inline int max(int a, int b) {
+  if (a > b)
+    return a;
+  else
+    return b;
+}
+int main(int argc, char **argv) {
+  printf("3 과 2 중 최대값은 : %d", max(3, 2));
+  return 0;
+}
+```
