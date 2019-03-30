@@ -22,12 +22,12 @@ int main() {
 }
 
 // a.txt 에 어떠한 긴 글이 들어 있는데, 이 글을 입력 받아서 특정한 문자열을 검색하는 프로그램을 만들어보세요
-// 미완성
-// sear
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+int compare(char *str1, char *str2);
 
 int main() {
 	FILE *fp = fopen("C:\\USERS\\USER\\Desktop\\a.txt", "r");
@@ -41,18 +41,32 @@ int main() {
 	}
 	fgets(text, 100, fp);
 
-	printf("검색할 문자열 : ");
+	printf("Search : ");
 	scanf("%s", search_str);
 
-	if (strcmp(search_str, text) == 0) {
-		printf("찾으시는 문자열이 있습니다.");
-		return 0;
-	}
-	else {
-		printf("찾으시는 문자열이 없습니다.");
-		return 0;
-	}
+	compare(search_str, text);
 
 	return 0;
 	fclose(fp);
+}
+
+int compare(char *str1, char *str2) {
+	int start_num, last_num;
+
+
+	while (*str1) {
+		if (*str1 == *str2)
+			
+			str1++;
+		else if (*str2 == '\0') {
+			printf("찾으시는 문자열이 없습니다.");
+			return 0;
+		}
+		else {
+			str2++;
+			*str1 = str1[0];
+		}
+	}
+	printf("찾으시는 문자열이 있습니다.");
+	return 0;
 }
