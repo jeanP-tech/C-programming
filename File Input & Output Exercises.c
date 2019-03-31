@@ -51,9 +51,6 @@ int main() {
 }
 
 int compare(char *str1, char *str2) {
-	int start_num, last_num;
-
-
 	while (*str1) {
 		if (*str1 == *str2)
 			
