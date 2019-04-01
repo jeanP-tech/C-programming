@@ -1,5 +1,3 @@
-// 미완성. search_in_file 함수가 
-
 #include <stdio.h>
 #include <stdlib.h>
 struct BOOK {
@@ -182,13 +180,12 @@ int print_book_list(BOOK *book_list,int num_total_book) {
 	fclose(fp);
 }
 
+// 문자열 txt로 따로 옮기지 말고 fgets 써서 하도록 수정
 int search_in_file(BOOK *book_list) {
 	FILE *fp = fopen("book.txt", "r");
 	int line_num = 1;
-	int i = 0;
-	int j = 0;
 	char user_search[30];
-	char text[100];
+	char text[30];
 
 	printf("Search: ");
 	scanf("%s", &user_search);
@@ -198,28 +195,14 @@ int search_in_file(BOOK *book_list) {
 		return 0;
 	}
 
-	fgets(text, 100, fp);
 
-
-	while (user_search != '\0') {
-		if (user_search[i] == text[j]) {
-			i++;
-			j++;
-		}
-		else if (text[j] =='\n') {
-			line_num++;
-			j++;
-		}
-		else if (text[j] == '\0') {
-			printf("검색하신 내용이 없습니다.\n");
+	while (fgets(text, sizeof(text), fp) != EOF) {
+		if (strcmp(text, user_search) == 0) {
+			printf("검색하신 결과가 있습니다");
 			return 0;
 		}
-		else {
-			i = 0;
-			j++;
-		}
 	}
-	printf("검색하신 내용이 %d번 줄에 있습니다.\n", line_num);
+	printf("검색하신 결과가 없습니다.");
 
 
 	return 0;
