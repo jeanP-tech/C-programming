@@ -1,4 +1,7 @@
+// 첫번째 줄 까지만 검색됨
+
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 struct BOOK {
 	char book_name[30];
@@ -13,7 +16,7 @@ int search_book(BOOK *book_list, int total_num_book);
 int borrow_book(BOOK *book_list);
 int return_book(BOOK *book_list);
 int print_book_list(BOOK *book_list, int num_total_book);
-int search_in_file(BOOK *book_list);
+int search_in_file(BOOK *book_list, int num_total_book);
 
 int main() {
 	int user_choice;        /* 유저가 선택한 메뉴 */
@@ -54,7 +57,7 @@ int main() {
 			break;
 		}
 		else if (user_choice == 7) { /* 파일 내 검색 */
-			search_in_file(book_list);
+			search_in_file(book_list, num_total_book);
 		}
 	}
 	free(book_list);
@@ -163,7 +166,7 @@ int print_book_list(BOOK *book_list,int num_total_book) {
 	int i;
 
 	if (fp == NULL) {
-		printf("ERROR! \n");
+		printf("E R R O R ! \n");
 		return 0;
 	}
 	fprintf(fp, "%d\n", num_total_book);
@@ -180,30 +183,30 @@ int print_book_list(BOOK *book_list,int num_total_book) {
 	fclose(fp);
 }
 
-// 문자열 txt로 따로 옮기지 말고 fgets 써서 하도록 수정
-int search_in_file(BOOK *book_list) {
+int search_in_file(BOOK *book_list, int num_total_book) {
 	FILE *fp = fopen("book.txt", "r");
 	int line_num = 1;
 	char user_search[30];
 	char text[30];
+	int i;
 
 	printf("Search: ");
 	scanf("%s", &user_search);
 
 	if (fp == NULL) {
-		printf("ERROR");
+		printf("E R R O R !\n");
 		return 0;
-	}
+	}	
 
-
-	while (fgets(text, sizeof(text), fp) != EOF) {
-		if (strcmp(text, user_search) == 0) {
-			printf("검색하신 결과가 있습니다");
+	for (i = 0; i <= num_total_book; i++) {
+		fgets(text, sizeof(text), fp);
+		if (strncmp(text, user_search, strlen(user_search)) == 0) {
+			printf("검색 결과가 %d번 줄에 있습니다.\n\n", line_num);
 			return 0;
 		}
+		line_num++;
 	}
-	printf("검색하신 결과가 없습니다.");
-
+	printf("검색하신 결과가 없습니다.\n\n");
 
 	return 0;
 	fclose(fp);
