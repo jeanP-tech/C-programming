@@ -1,5 +1,3 @@
-// 첫번째 줄 까지만 검색됨
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,15 +14,16 @@ int search_book(BOOK *book_list, int total_num_book);
 int borrow_book(BOOK *book_list);
 int return_book(BOOK *book_list);
 int print_book_list(BOOK *book_list, int num_total_book);
-int search_in_file(BOOK *book_list, int num_total_book);
+int search_in_file(BOOK *book_list, int max_book_num);
 
 int main() {
 	int user_choice;        /* 유저가 선택한 메뉴 */
 	int num_total_book = 0; /* 현재 책의 수 */
+	int max_book_num;
 	BOOK *book_list;
 	printf("도서관의 최대 보관 장서 수를 설정해주세요 : ");
-	scanf("%d", &user_choice);
-	book_list = (BOOK *)malloc(sizeof(BOOK) * user_choice);
+	scanf("%d", &max_book_num);
+	book_list = (BOOK *)malloc(sizeof(BOOK) * max_book_num);
 
 	while (1) {
 		printf("도서 관리 프로그램 \n");
@@ -57,7 +56,7 @@ int main() {
 			break;
 		}
 		else if (user_choice == 7) { /* 파일 내 검색 */
-			search_in_file(book_list, num_total_book);
+			search_in_file(book_list, max_book_num);
 		}
 	}
 	free(book_list);
@@ -161,6 +160,7 @@ int return_book(BOOK *book_list) { /* 반납할 책의 번호 */
 	return 0;
 }
 
+// 도서 목록을 파일로 출력하는 함수
 int print_book_list(BOOK *book_list,int num_total_book) {
 	FILE *fp = fopen("book.txt", "w");
 	int i;
@@ -183,7 +183,8 @@ int print_book_list(BOOK *book_list,int num_total_book) {
 	fclose(fp);
 }
 
-int search_in_file(BOOK *book_list, int num_total_book) {
+// 출력된 도서 목록 내에서 검색하는 함수
+int search_in_file(BOOK *book_list, int max_book_num) {
 	FILE *fp = fopen("book.txt", "r");
 	int line_num = 1;
 	char user_search[30];
@@ -197,8 +198,8 @@ int search_in_file(BOOK *book_list, int num_total_book) {
 		printf("E R R O R !\n");
 		return 0;
 	}	
-
-	for (i = 0; i <= num_total_book; i++) {
+	
+	for (i = 0; i < (max_book_num * 4) + 1; i++) {
 		fgets(text, sizeof(text), fp);
 		if (strncmp(text, user_search, strlen(user_search)) == 0) {
 			printf("검색 결과가 %d번 줄에 있습니다.\n\n", line_num);
